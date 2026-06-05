@@ -1,0 +1,95 @@
+<navigation-bar title="上岸计划" back="{{false}}" color="black" background="#F5F7FA"></navigation-bar>
+
+<scroll-view class="scrollarea" scroll-y enhanced show-scrollbar="{{false}}" refresher-enabled bindrefresherrefresh="onPullDownRefresh">
+  <view class="container">
+
+    <!-- 顶部日期区 -->
+    <view class="header-section">
+      <view class="date-row">
+        <view class="date-left">
+          <text class="date-day">{{todayCN}}</text>
+          <text class="date-week">{{weekDay}}</text>
+        </view>
+        <view class="checkin-btn" bindtap="goCheckin">
+          <text>📝 打卡</text>
+        </view>
+      </view>
+      <text class="encouragement">{{encouragement}}</text>
+    </view>
+
+    <!-- 倒计时卡片 -->
+    <view class="countdown-row" wx:if="{{hasGoal}}">
+      <view class="countdown-half">
+        <countdown-card
+          title="考研"
+          icon="🎯"
+          target-date="{{gradExamDate}}"
+          color="var(--grad)"
+          bind:tap="goCountdown"
+        ></countdown-card>
+      </view>
+      <view class="countdown-half">
+        <countdown-card
+          title="雅思"
+          icon="🌍"
+          target-date="{{ieltsExamDate}}"
+          color="var(--ielts)"
+          bind:tap="goCountdown"
+        ></countdown-card>
+      </view>
+    </view>
+
+    <!-- 今日进度卡片 -->
+    <view class="card progress-card">
+      <view class="flex-between" style="margin-bottom: 20rpx;">
+        <text class="section-title">📊 今日进度</text>
+        <text class="progress-num">{{completedTasks}}/{{totalTasks}}</text>
+      </view>
+      <progress-bar percent="{{completionRate}}" height="{{20}}"></progress-bar>
+      <view class="progress-detail">
+        <view class="detail-item">
+          <text class="detail-label">计划时长</text>
+          <text class="detail-value">{{totalPlannedMinutes}}分钟</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-label">已学习</text>
+          <text class="detail-value">{{studiedMinutes}}分钟</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-label">完成率</text>
+          <text class="detail-value">{{completionRate}}%</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 无目标引导 -->
+    <view class="card" wx:if="{{!hasGoal}}" bindtap="goGoalSetup" style="text-align: center;">
+      <text class="empty-icon">🎯</text>
+      <text class="section-title" style="margin-top: 16rpx;">还没有设置学习目标</text>
+      <text style="color: var(--text-hint); font-size: 24rpx; margin-top: 8rpx;">点击设置考研/雅思目标，开始你的上岸计划</text>
+      <view class="btn-primary" style="margin-top: 24rpx; display: inline-block;">设置目标</view>
+    </view>
+
+    <!-- 今日任务列表 -->
+    <view class="task-section" wx:if="{{tasks.length > 0}}">
+      <view class="flex-between" style="padding: 0 32rpx; margin-bottom: 16rpx;">
+        <text class="section-title" style="margin-bottom: 0;">📋 今日任务</text>
+        <text class="task-count" wx:if="{{completedTasks === totalTasks && totalTasks > 0}}" style="color: var(--success);">全部完成 🎉</text>
+      </view>
+      <view class="task-list">
+        <task-card
+          wx:for="{{tasks}}"
+          wx:key="id"
+          task="{{item}}"
+          bind:tap="onTaskTap"
+          bind:start="onTaskStart"
+          bind:complete="onTaskComplete"
+        ></task-card>
+      </view>
+    </view>
+
+    <view style="height: 260rpx;"></view>
+  </view>
+</scroll-view>
+
+<tab-bar selected="{{0}}"></tab-bar>

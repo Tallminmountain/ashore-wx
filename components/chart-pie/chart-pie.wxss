@@ -1,0 +1,73 @@
+.chart-pie-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pie-visual {
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--primary) 0deg 120deg,
+    var(--ielts) 120deg 200deg,
+    var(--success) 200deg 280deg,
+    var(--warning) 280deg 360deg
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 24rpx;
+}
+
+.pie-center {
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pie-total {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.pie-total-label {
+  font-size: 20rpx;
+  color: var(--text-hint);
+}
+
+.pie-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  width: 100%;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.legend-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+}
+
+.legend-label {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.legend-value {
+  font-size: 24rpx;
+  color: var(--text-primary);
+  font-weight: 500;
+}

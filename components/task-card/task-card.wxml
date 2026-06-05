@@ -1,0 +1,30 @@
+<view class="task-card {{task.status === 'completed' ? 'completed' : ''}}" bindtap="onTap">
+  <view class="task-left">
+    <view class="task-icon-wrap {{task.type}}">
+      <text class="task-icon">{{task.icon || '📋'}}</text>
+    </view>
+  </view>
+  <view class="task-body">
+    <view class="task-header">
+      <text class="task-title">{{task.title}}</text>
+      <view class="task-tag" style="background: {{task.type === 'grad' ? 'var(--grad-bg)' : 'var(--ielts-bg)'}}; color: {{task.type === 'grad' ? 'var(--grad)' : 'var(--ielts)'}}">
+        {{task.type === 'grad' ? '考研' : '雅思'}}
+      </view>
+    </view>
+    <view class="task-info">
+      <text class="task-time">⏱️ {{timeText}}</text>
+      <text class="task-status" style="color: {{statusColor}}">{{statusText}}</text>
+    </view>
+  </view>
+  <view class="task-actions" wx:if="{{showActions && task.status !== 'completed'}}">
+    <view class="action-btn start" catchtap="onStart" wx:if="{{task.status === 'pending' || task.status === 'postponed'}}">
+      开始
+    </view>
+    <view class="action-btn done" catchtap="onComplete" wx:if="{{task.status === 'in_progress'}}">
+      完成
+    </view>
+  </view>
+  <view class="task-check" wx:if="{{task.status === 'completed'}}">
+    <text>✅</text>
+  </view>
+</view>

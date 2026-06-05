@@ -1,0 +1,170 @@
+<navigation-bar title="设置目标" back="{{true}}" color="black" background="#F5F7FA"></navigation-bar>
+
+<scroll-view class="scrollarea" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="container">
+
+    <!-- 步骤指示器 -->
+    <view class="steps">
+      <view class="step {{step >= 1 ? 'active' : ''}}">
+        <view class="step-dot">1</view>
+        <text class="step-text">考研</text>
+      </view>
+      <view class="step-line {{step >= 2 ? 'active' : ''}}"></view>
+      <view class="step {{step >= 2 ? 'active' : ''}}">
+        <view class="step-dot">2</view>
+        <text class="step-text">雅思</text>
+      </view>
+      <view class="step-line {{step >= 3 ? 'active' : ''}}"></view>
+      <view class="step {{step >= 3 ? 'active' : ''}}">
+        <view class="step-dot">3</view>
+        <text class="step-text">时间</text>
+      </view>
+    </view>
+
+    <!-- 步骤1：考研目标 -->
+    <view wx:if="{{step === 1}}">
+      <view class="form-section">
+        <text class="form-title">🎯 考研目标</text>
+
+        <view class="form-group">
+          <text class="form-label">目标院校</text>
+          <input class="form-input" placeholder="例如：清华大学" value="{{gradTargetSchool}}" data-field="gradTargetSchool" bindinput="onInput" />
+        </view>
+
+        <view class="form-group">
+          <text class="form-label">目标专业</text>
+          <input class="form-input" placeholder="例如：计算机科学与技术" value="{{gradTargetMajor}}" data-field="gradTargetMajor" bindinput="onInput" />
+        </view>
+
+        <view class="form-group">
+          <text class="form-label">考试时间</text>
+          <picker mode="date" value="{{gradExamDate}}" data-field="gradExamDate" bindchange="onDateChange">
+            <view class="form-input picker">{{gradExamDate || '选择日期'}}</view>
+          </picker>
+        </view>
+
+        <view class="form-group">
+          <text class="form-label">考试科目（选择你需要复习的科目）</text>
+          <view class="subject-grid">
+            <view
+              wx:for="{{allGradSubjects}}"
+              wx:key="name"
+              class="subject-chip {{gradSubjects.indexOf(item.name) !== -1 ? 'selected' : ''}}"
+              data-name="{{item.name}}"
+              bindtap="toggleSubject"
+            >
+              <text>{{item.icon}} {{item.name}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 步骤2：雅思目标 -->
+    <view wx:if="{{step === 2}}">
+      <view class="form-section">
+        <text class="form-title">🌍 雅思目标</text>
+
+        <view class="form-group">
+          <text class="form-label">目标分数</text>
+          <view class="option-row">
+            <view
+              wx:for="{{scoreOptions}}"
+              wx:key="*this"
+              class="option-chip {{ieltsTargetScore === item ? 'selected' : ''}}"
+              data-value="{{item}}"
+              bindtap="selectScore"
+            >{{item}}</view>
+          </view>
+        </view>
+
+        <view class="form-group">
+          <text class="form-label">当前英语基础</text>
+          <view class="option-row">
+            <view
+              wx:for="{{levelOptions}}"
+              wx:key="*this"
+              class="option-chip {{ieltsCurrentLevel === item ? 'selected' : ''}}"
+              data-value="{{item}}"
+              bindtap="selectLevel"
+            >{{item}}</view>
+          </view>
+        </view>
+
+        <view class="form-group">
+          <text class="form-label">目标考试时间</text>
+          <picker mode="date" value="{{ieltsExamDate}}" data-field="ieltsExamDate" bindchange="onDateChange">
+            <view class="form-input picker">{{ieltsExamDate || '选择日期'}}</view>
+          </picker>
+        </view>
+
+        <view class="form-group">
+          <text class="form-label">学习计划</text>
+          <view class="plan-list">
+            <view class="plan-item {{ieltsPlan.listening ? 'active' : ''}}" data-skill="listening" bindtap="toggleIeltsPlan">
+              <text>🎧 听力</text>
+              <text class="plan-check">{{ieltsPlan.listening ? '✅' : '⬜'}}</text>
+            </view>
+            <view class="plan-item {{ieltsPlan.reading ? 'active' : ''}}" data-skill="reading" bindtap="toggleIeltsPlan">
+              <text>📖 阅读</text>
+              <text class="plan-check">{{ieltsPlan.reading ? '✅' : '⬜'}}</text>
+            </view>
+            <view class="plan-item {{ieltsPlan.writing ? 'active' : ''}}" data-skill="writing" bindtap="toggleIeltsPlan">
+              <text>✍️ 写作</text>
+              <text class="plan-check">{{ieltsPlan.writing ? '✅' : '⬜'}}</text>
+            </view>
+            <view class="plan-item {{ieltsPlan.speaking ? 'active' : ''}}" data-skill="speaking" bindtap="toggleIeltsPlan">
+              <text>🗣️ 口语</text>
+              <text class="plan-check">{{ieltsPlan.speaking ? '✅' : '⬜'}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 步骤3：时间设置 -->
+    <view wx:if="{{step === 3}}">
+      <view class="form-section">
+        <text class="form-title">⏰ 学习时间安排</text>
+
+        <view class="form-group">
+          <text class="form-label">每天可学习总时长</text>
+          <view class="option-row">
+            <view
+              wx:for="{{hourOptions}}"
+              wx:key="*this"
+              class="option-chip {{dailyStudyHours === item ? 'selected' : ''}}"
+              bindtap="onInput"
+              data-field="dailyStudyHours"
+              data-value="{{item}}"
+            >{{item}}小时</view>
+          </view>
+        </view>
+
+        <view class="form-group">
+          <text class="form-label">每天雅思学习时长</text>
+          <view class="option-row">
+            <view
+              wx:for="{{ieltsHourOptions}}"
+              wx:key="*this"
+              class="option-chip {{dailyIeltsHours === item ? 'selected' : ''}}"
+              bindtap="onInput"
+              data-field="dailyIeltsHours"
+              data-value="{{item}}"
+            >{{item}}小时</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部按钮 -->
+    <view class="bottom-bar">
+      <view class="btn-secondary" wx:if="{{step > 1}}" bindtap="prevStep">上一步</view>
+      <view class="btn-secondary" bindtap="skip">跳过</view>
+      <view class="btn-primary" wx:if="{{step < 3}}" bindtap="nextStep">下一步</view>
+      <view class="btn-primary" wx:if="{{step === 3}}" bindtap="save">完成设置</view>
+    </view>
+
+    <view style="height: 120rpx;"></view>
+  </view>
+</scroll-view>

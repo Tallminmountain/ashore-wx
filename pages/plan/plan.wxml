@@ -1,0 +1,83 @@
+<navigation-bar title="学习计划" back="{{false}}" color="black" background="#F5F7FA"></navigation-bar>
+
+<scroll-view class="scrollarea" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="container">
+
+    <!-- 顶部切换 -->
+    <view class="tab-bar-wrap">
+      <view class="tab-item {{currentTab === 'today' ? 'active' : ''}}" data-tab="today" bindtap="switchTab">今日</view>
+      <view class="tab-item {{currentTab === 'week' ? 'active' : ''}}" data-tab="week" bindtap="switchTab">本周</view>
+      <view class="tab-item {{currentTab === 'grad' ? 'active' : ''}}" data-tab="grad" bindtap="switchTab">考研</view>
+      <view class="tab-item {{currentTab === 'ielts' ? 'active' : ''}}" data-tab="ielts" bindtap="switchTab">雅思</view>
+    </view>
+
+    <!-- 延期任务提醒 -->
+    <view class="postponed-banner" wx:if="{{postponedTasks.length > 0}}" bindtap="handlePostponed">
+      <text>⚠️ 有 {{postponedTasks.length}} 个延期任务待处理</text>
+      <text class="banner-action">处理 →</text>
+    </view>
+
+    <!-- 今日任务 -->
+    <view wx:if="{{currentTab === 'today'}}">
+      <view class="flex-between" style="padding: 24rpx 32rpx 12rpx;">
+        <text class="section-title" style="margin-bottom: 0;">{{todayDate}} 任务</text>
+        <view class="add-btn" bindtap="addTask">+ 添加</view>
+      </view>
+      <view class="task-list" wx:if="{{todayTasks.length > 0}}">
+        <task-card
+          wx:for="{{todayTasks}}"
+          wx:key="id"
+          task="{{item}}"
+          bind:tap="onTaskTap"
+          bind:start="onTaskStart"
+        ></task-card>
+      </view>
+      <empty-state wx:else icon="📋" title="今天还没有任务" desc="设置目标后会自动生成每日任务"></empty-state>
+    </view>
+
+    <!-- 本周安排 -->
+    <view wx:if="{{currentTab === 'week'}}">
+      <view class="week-grid">
+        <view class="week-item {{item.isToday ? 'today' : ''}}" wx:for="{{weekDays}}" wx:key="date">
+          <text class="week-day">{{item.weekDay}}</text>
+          <text class="week-num">{{item.dayNum}}</text>
+          <view class="week-dot {{item.rate >= 80 ? 'full' : item.rate > 0 ? 'partial' : ''}}" wx:if="{{item.total > 0}}"></view>
+          <text class="week-rate" wx:if="{{item.total > 0}}">{{item.completed}}/{{item.total}}</text>
+          <text class="week-empty" wx:else>—</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 考研计划 -->
+    <view wx:if="{{currentTab === 'grad'}}">
+      <view class="task-list" wx:if="{{gradTasks.length > 0}}" style="padding-top: 16rpx;">
+        <task-card
+          wx:for="{{gradTasks}}"
+          wx:key="id"
+          task="{{item}}"
+          show-actions="{{false}}"
+          bind:tap="onTaskTap"
+        ></task-card>
+      </view>
+      <empty-state wx:else icon="🎯" title="暂无考研任务" desc="设置考研目标后自动生成"></empty-state>
+    </view>
+
+    <!-- 雅思计划 -->
+    <view wx:if="{{currentTab === 'ielts'}}">
+      <view class="task-list" wx:if="{{ieltsTasks.length > 0}}" style="padding-top: 16rpx;">
+        <task-card
+          wx:for="{{ieltsTasks}}"
+          wx:key="id"
+          task="{{item}}"
+          show-actions="{{false}}"
+          bind:tap="onTaskTap"
+        ></task-card>
+      </view>
+      <empty-state wx:else icon="🌍" title="暂无雅思任务" desc="设置雅思目标后自动生成"></empty-state>
+    </view>
+
+    <view style="height: 260rpx;"></view>
+  </view>
+</scroll-view>
+
+<tab-bar selected="{{1}}"></tab-bar>

@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar",
+    "progress-bar": "/components/progress-bar/progress-bar",
+    "chart-bar": "/components/chart-bar/chart-bar",
+    "chart-pie": "/components/chart-pie/chart-pie",
+    "tab-bar": "/components/tab-bar/tab-bar",
+    "empty-state": "/components/empty-state/empty-state"
+  }
+}

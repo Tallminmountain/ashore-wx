@@ -1,0 +1,46 @@
+.countdown-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--card-bg);
+  border-radius: 16rpx;
+  padding: 24rpx 28rpx;
+  box-shadow: var(--shadow);
+}
+
+.cd-left {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.cd-icon {
+  font-size: 36rpx;
+}
+
+.cd-title {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+}
+
+.cd-right {
+  display: flex;
+  align-items: baseline;
+  gap: 4rpx;
+}
+
+.cd-days {
+  font-size: 48rpx;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.cd-days.expired {
+  font-size: 28rpx;
+  color: var(--text-hint);
+}
+
+.cd-label {
+  font-size: 22rpx;
+  color: var(--text-secondary);
+}

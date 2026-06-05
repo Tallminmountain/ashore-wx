@@ -1,0 +1,110 @@
+<navigation-bar title="{{mode === 'add' ? '添加任务' : '任务详情'}}" back="{{true}}" color="black" background="#F5F7FA"></navigation-bar>
+
+<scroll-view class="scrollarea" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="container">
+
+    <!-- 查看模式 -->
+    <view wx:if="{{mode === 'view' && task}}">
+      <!-- 任务头部 -->
+      <view class="detail-header card">
+        <view class="flex-between">
+          <view class="tag {{task.type === 'grad' ? 'tag-grad' : 'tag-ielts'}}">
+            {{task.type === 'grad' ? '考研' : '雅思'}}
+          </view>
+          <view class="status-badge" style="background: {{statusColor}}20; color: {{statusColor}};">
+            {{statusText}}
+          </view>
+        </view>
+        <text class="detail-title">{{task.icon}} {{task.title}}</text>
+        <text class="detail-content" wx:if="{{task.content}}">{{task.content}}</text>
+      </view>
+
+      <!-- 时间信息 -->
+      <view class="card">
+        <text class="section-title">⏱️ 时间信息</text>
+        <view class="info-grid">
+          <view class="info-cell">
+            <text class="ic-label">预计时长</text>
+            <text class="ic-value">{{task.plannedMinutes}}分钟</text>
+          </view>
+          <view class="info-cell">
+            <text class="ic-label">实际时长</text>
+            <text class="ic-value">{{task.actualMinutes || 0}}分钟</text>
+          </view>
+          <view class="info-cell">
+            <text class="ic-label">日期</text>
+            <text class="ic-value">{{task.date}}</text>
+          </view>
+          <view class="info-cell">
+            <text class="ic-label">完成度</text>
+            <progress-bar percent="{{task.plannedMinutes > 0 ? (task.actualMinutes / task.plannedMinutes * 100) : 0}}" height="{{12}}" show-text="{{false}}"></progress-bar>
+          </view>
+        </view>
+      </view>
+
+      <!-- 操作按钮 -->
+      <view class="action-group">
+        <view class="btn-primary action-full" bindtap="startStudy" wx:if="{{task.status !== 'completed' && task.status !== 'abandoned'}}">
+          🚀 开始学习
+        </view>
+        <view class="action-row">
+          <view class="btn-secondary action-half" bindtap="completeTask" wx:if="{{task.status !== 'completed'}}">
+            ✅ 标记完成
+          </view>
+          <view class="btn-secondary action-half" bindtap="editMinutes">
+            ✏️ 修改时长
+          </view>
+        </view>
+        <view class="action-row">
+          <view class="btn-secondary action-half" bindtap="postponeTask" wx:if="{{task.status !== 'completed'}}">
+            📅 延期到明天
+          </view>
+          <view class="btn-secondary action-half" bindtap="skipTask" wx:if="{{task.status !== 'completed'}}">
+            ⏭️ 暂时跳过
+          </view>
+        </view>
+        <view class="delete-btn" bindtap="deleteTask">🗑️ 删除任务</view>
+      </view>
+    </view>
+
+    <!-- 添加模式 -->
+    <view wx:if="{{mode === 'add'}}">
+      <view class="form-section">
+        <view class="form-group">
+          <text class="form-label">任务类型</text>
+          <view class="type-switch">
+            <view class="type-btn {{taskType === 'grad' ? 'active' : ''}}" bindtap="onInput" data-field="taskType" data-value="grad">🎯 考研</view>
+            <view class="type-btn {{taskType === 'ielts' ? 'active' : ''}}" bindtap="onInput" data-field="taskType" data-value="ielts">🌍 雅思</view>
+          </view>
+        </view>
+
+        <view class="form-group">
+          <text class="form-label">任务名称</text>
+          <input class="form-input" placeholder="例如：高等数学第三章复习" value="{{title}}" data-field="title" bindinput="onInput" />
+        </view>
+
+        <view class="form-group">
+          <text class="form-label">任务内容（可选）</text>
+          <textarea class="form-textarea" placeholder="详细描述学习内容..." value="{{content}}" data-field="content" bindinput="onInput" />
+        </view>
+
+        <view class="form-group">
+          <text class="form-label">预计学习时长</text>
+          <view class="option-row">
+            <view
+              wx:for="{{minuteOptions}}"
+              wx:key="*this"
+              class="option-chip {{plannedMinutes === item ? 'selected' : ''}}"
+              data-value="{{item}}"
+              bindtap="selectMinutes"
+            >{{item}}分钟</view>
+          </view>
+        </view>
+
+        <view class="btn-primary" style="margin-top: 48rpx;" bindtap="saveTask">添加任务</view>
+      </view>
+    </view>
+
+    <view style="height: 48rpx;"></view>
+  </view>
+</scroll-view>

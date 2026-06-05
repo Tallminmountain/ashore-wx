@@ -1,0 +1,85 @@
+<navigation-bar title="学习计时" back="{{false}}" color="black" background="#F5F7FA"></navigation-bar>
+
+<scroll-view class="scrollarea" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="container">
+
+    <!-- 模式切换 -->
+    <view class="mode-switch">
+      <view class="mode-btn {{mode === 'forward' ? 'active' : ''}}" data-mode="forward" bindtap="switchMode">
+        <text class="mode-icon">⏱️</text>
+        <text>正向计时</text>
+      </view>
+      <view class="mode-btn {{mode === 'pomodoro' ? 'active' : ''}}" data-mode="pomodoro" bindtap="switchMode">
+        <text class="mode-icon">🍅</text>
+        <text>番茄钟</text>
+      </view>
+    </view>
+
+    <!-- 当前任务 -->
+    <view class="current-task card" wx:if="{{currentTask}}">
+      <view class="flex-between">
+        <text class="task-label">当前任务</text>
+        <view class="tag {{currentTask.type === 'grad' ? 'tag-grad' : 'tag-ielts'}}">
+          {{currentTask.type === 'grad' ? '考研' : '雅思'}}
+        </view>
+      </view>
+      <text class="task-name">{{currentTask.icon}} {{currentTask.title}}</text>
+    </view>
+
+    <!-- 番茄钟信息 -->
+    <view class="pomodoro-info" wx:if="{{mode === 'pomodoro'}}">
+      <text wx:if="{{isResting}}">☕ 休息中</text>
+      <text wx:else>🍅 专注中 · 第{{roundCount + 1}}个番茄</text>
+    </view>
+
+    <!-- 计时器主体 -->
+    <view class="timer-main">
+      <timer-ring
+        seconds="{{seconds}}"
+        total-seconds="{{totalSeconds}}"
+        running="{{running}}"
+        label="{{mode === 'pomodoro' ? (isResting ? '休息' : '专注') : (currentTask ? currentTask.title : '自由计时')}}"
+      ></timer-ring>
+    </view>
+
+    <!-- 控制按钮 -->
+    <view class="timer-controls">
+      <view class="ctrl-btn secondary" bindtap="resetTimer" wx:if="{{seconds > 0 && !running}}">
+        <text>重置</text>
+      </view>
+      <view class="ctrl-btn primary {{running ? 'running' : ''}}" bindtap="toggleTimer">
+        <text>{{running ? '暂停' : (paused ? '继续' : '开始')}}</text>
+      </view>
+      <view class="ctrl-btn secondary" bindtap="finishTimer" wx:if="{{seconds > 0}}">
+        <text>结束</text>
+      </view>
+    </view>
+
+    <!-- 番茄钟轮数 -->
+    <view class="round-info" wx:if="{{mode === 'pomodoro' && roundCount > 0}}">
+      <text>已完成 {{roundCount}} 个番茄 🍅</text>
+    </view>
+
+    <!-- 待选任务列表 -->
+    <view class="task-select" wx:if="{{!currentTask && taskList.length > 0}}">
+      <text class="section-title">选择要学习的任务</text>
+      <view class="task-option" wx:for="{{taskList}}" wx:key="id" data-index="{{index}}" bindtap="selectTask">
+        <text class="option-icon">{{item.icon}}</text>
+        <view class="option-info">
+          <text class="option-title">{{item.title}}</text>
+          <text class="option-time">预计 {{item.plannedMinutes}} 分钟</text>
+        </view>
+        <text class="option-arrow">→</text>
+      </view>
+    </view>
+
+    <!-- 自由计时提示 -->
+    <view class="free-tip" wx:if="{{!currentTask && taskList.length === 0}}">
+      <text style="color: var(--text-hint); font-size: 24rpx;">没有待完成的任务，可以自由计时</text>
+    </view>
+
+    <view style="height: 260rpx;"></view>
+  </view>
+</scroll-view>
+
+<tab-bar selected="{{2}}"></tab-bar>

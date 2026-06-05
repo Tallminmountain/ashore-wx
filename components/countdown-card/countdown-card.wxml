@@ -1,0 +1,11 @@
+<view class="countdown-card" style="border-left: 6rpx solid {{color}};" bindtap="onTap">
+  <view class="cd-left">
+    <text class="cd-icon">{{icon}}</text>
+    <text class="cd-title">{{title}}</text>
+  </view>
+  <view class="cd-right">
+    <text class="cd-days" wx:if="{{!expired}}" style="color: {{color}}">{{days}}</text>
+    <text class="cd-days expired" wx:else>已过</text>
+    <text class="cd-label" wx:if="{{!expired}}">天</text>
+  </view>
+</view>

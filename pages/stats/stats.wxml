@@ -1,0 +1,99 @@
+<navigation-bar title="学习数据" back="{{false}}" color="black" background="#F5F7FA"></navigation-bar>
+
+<scroll-view class="scrollarea" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="container">
+
+    <!-- 总览卡片 -->
+    <view class="overview-grid">
+      <view class="overview-item">
+        <text class="ov-value">{{todayMinutes}}</text>
+        <text class="ov-label">今日(分钟)</text>
+      </view>
+      <view class="overview-item">
+        <text class="ov-value">{{weekMinutes}}</text>
+        <text class="ov-label">本周(分钟)</text>
+      </view>
+      <view class="overview-item">
+        <text class="ov-value">{{monthMinutes}}</text>
+        <text class="ov-label">本月(分钟)</text>
+      </view>
+      <view class="overview-item highlight">
+        <text class="ov-value">{{consecutiveDays}}</text>
+        <text class="ov-label">连续打卡</text>
+      </view>
+    </view>
+
+    <!-- 任务统计 -->
+    <view class="card">
+      <text class="section-title">📈 任务统计</text>
+      <view class="stats-row">
+        <view class="stat-box">
+          <text class="stat-num" style="color: var(--primary);">{{totalTasks}}</text>
+          <text class="stat-label">总任务</text>
+        </view>
+        <view class="stat-box">
+          <text class="stat-num" style="color: var(--success);">{{completedTasks}}</text>
+          <text class="stat-label">已完成</text>
+        </view>
+        <view class="stat-box">
+          <text class="stat-num" style="color: var(--warning);">{{unfinishedCount}}</text>
+          <text class="stat-label">未完成</text>
+        </view>
+        <view class="stat-box">
+          <text class="stat-num" style="color: var(--danger);">{{postponedCount}}</text>
+          <text class="stat-label">已延期</text>
+        </view>
+      </view>
+      <view style="margin-top: 20rpx;">
+        <text style="font-size: 24rpx; color: var(--text-hint);">总体完成率</text>
+        <progress-bar percent="{{completionRate}}" height="{{20}}" style="margin-top: 12rpx;"></progress-bar>
+      </view>
+    </view>
+
+    <!-- 每周学习时长柱状图 -->
+    <view class="card">
+      <text class="section-title">📊 本周学习时长</text>
+      <chart-bar data="{{weeklyBarData}}" height="{{280}}"></chart-bar>
+    </view>
+
+    <!-- 科目占比饼图 -->
+    <view class="card" wx:if="{{subjectPieData.length > 0}}">
+      <text class="section-title">🥧 科目学习占比</text>
+      <chart-pie data="{{subjectPieData}}"></chart-pie>
+    </view>
+
+    <!-- 雅思四项 -->
+    <view class="card">
+      <text class="section-title">🌍 雅思练习次数</text>
+      <view class="ielts-grid">
+        <view class="ielts-item">
+          <text class="ielts-icon">🎧</text>
+          <text class="ielts-name">听力</text>
+          <text class="ielts-count">{{ieltsSkills.listening}}次</text>
+        </view>
+        <view class="ielts-item">
+          <text class="ielts-icon">📖</text>
+          <text class="ielts-name">阅读</text>
+          <text class="ielts-count">{{ieltsSkills.reading}}次</text>
+        </view>
+        <view class="ielts-item">
+          <text class="ielts-icon">✍️</text>
+          <text class="ielts-name">写作</text>
+          <text class="ielts-count">{{ieltsSkills.writing}}次</text>
+        </view>
+        <view class="ielts-item">
+          <text class="ielts-icon">🗣️</text>
+          <text class="ielts-name">口语</text>
+          <text class="ielts-count">{{ieltsSkills.speaking}}次</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <empty-state wx:if="{{!hasData}}" icon="📊" title="暂无学习数据" desc="完成任务后这里会显示你的学习统计"></empty-state>
+
+    <view style="height: 260rpx;"></view>
+  </view>
+</scroll-view>
+
+<tab-bar selected="{{3}}"></tab-bar>

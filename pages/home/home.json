@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar",
+    "task-card": "/components/task-card/task-card",
+    "progress-bar": "/components/progress-bar/progress-bar",
+    "countdown-card": "/components/countdown-card/countdown-card",
+    "tab-bar": "/components/tab-bar/tab-bar"
+  },
+  "enablePullDownRefresh": false
+}

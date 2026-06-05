@@ -1,0 +1,60 @@
+<navigation-bar title="考试倒计时" back="{{true}}" color="black" background="#F5F7FA"></navigation-bar>
+
+<scroll-view class="scrollarea" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="container">
+
+    <!-- 考研倒计时 -->
+    <view class="countdown-section grad" wx:if="{{hasGrad}}">
+      <view class="cd-header">
+        <text class="cd-emoji">🎯</text>
+        <text class="cd-title">考研倒计时</text>
+      </view>
+      <view class="cd-number-wrap">
+        <text class="cd-number">{{gradDays}}</text>
+        <text class="cd-unit">天</text>
+      </view>
+      <view class="cd-info">
+        <text class="cd-target">{{gradSchool}} {{gradMajor}}</text>
+        <text class="cd-date">考试日期：{{gradDate}}</text>
+      </view>
+      <view class="cd-reminder" wx:if="{{gradDays > 0}}">
+        <text wx:if="{{gradDays > 100}}">时间充裕，稳扎稳打 💪</text>
+        <text wx:elif="{{gradDays > 30}}">进入冲刺阶段，加油！🔥</text>
+        <text wx:elif="{{gradDays > 7}}">最后关头，坚持就是胜利！⭐</text>
+        <text wx:else>临门一脚，你一定行！🚀</text>
+      </view>
+      <view class="cd-edit" bindtap="editGradDate">修改考试日期</view>
+    </view>
+
+    <!-- 雅思倒计时 -->
+    <view class="countdown-section ielts" wx:if="{{hasIelts}}">
+      <view class="cd-header">
+        <text class="cd-emoji">🌍</text>
+        <text class="cd-title">雅思倒计时</text>
+      </view>
+      <view class="cd-number-wrap">
+        <text class="cd-number">{{ieltsDays}}</text>
+        <text class="cd-unit">天</text>
+      </view>
+      <view class="cd-info">
+        <text class="cd-target">目标分数：{{ieltsScore}}分</text>
+        <text class="cd-date">考试日期：{{ieltsDate}}</text>
+      </view>
+      <view class="cd-reminder" wx:if="{{ieltsDays > 0}}">
+        <text wx:if="{{ieltsDays > 60}}">每天坚持听说读写练习 📖</text>
+        <text wx:elif="{{ieltsDays > 20}}">加强薄弱项训练 🎯</text>
+        <text wx:else>考前模拟冲刺！💯</text>
+      </view>
+      <view class="cd-edit" bindtap="editIeltsDate">修改考试日期</view>
+    </view>
+
+    <!-- 未设置 -->
+    <view class="empty-section" wx:if="{{!hasGrad && !hasIelts}}">
+      <text class="empty-icon">📅</text>
+      <text class="empty-text">还没有设置考试日期</text>
+      <navigator url="/pages/goal-setup/goal-setup" class="btn-primary" style="display: inline-block; margin-top: 24rpx;">去设置</navigator>
+    </view>
+
+    <view style="height: 48rpx;"></view>
+  </view>
+</scroll-view>

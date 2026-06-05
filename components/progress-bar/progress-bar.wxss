@@ -1,0 +1,26 @@
+.progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.progress-track {
+  flex: 1;
+  background: #E5E5EA;
+  border-radius: 100rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  border-radius: 100rpx;
+  transition: width 0.5s ease;
+  min-width: 0;
+}
+
+.progress-text {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: var(--text-secondary);
+  min-width: 60rpx;
+  text-align: right;
+}

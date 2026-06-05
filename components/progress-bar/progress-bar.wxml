@@ -1,0 +1,6 @@
+<view class="progress-wrap">
+  <view class="progress-track" style="height: {{height}}rpx;">
+    <view class="progress-fill" style="width: {{percent > 100 ? 100 : percent}}%; background: {{barColor}}; height: {{height}}rpx;"></view>
+  </view>
+  <text class="progress-text" wx:if="{{showText}}">{{percent}}%</text>
+</view>

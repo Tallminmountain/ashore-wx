@@ -1,0 +1,158 @@
+.scrollarea {
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.mode-switch {
+  display: flex;
+  margin: 20rpx 32rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 6rpx;
+  box-shadow: var(--shadow);
+}
+
+.mode-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  padding: 20rpx 0;
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  border-radius: 12rpx;
+  transition: all 0.3s;
+}
+
+.mode-btn.active {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+}
+
+.mode-icon {
+  font-size: 32rpx;
+}
+
+.current-task {
+  margin: 0 32rpx 16rpx;
+}
+
+.task-label {
+  font-size: 24rpx;
+  color: var(--text-hint);
+}
+
+.task-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-top: 8rpx;
+  display: block;
+}
+
+.pomodoro-info {
+  text-align: center;
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  margin-bottom: 8rpx;
+}
+
+.timer-main {
+  display: flex;
+  justify-content: center;
+  padding: 40rpx 0;
+}
+
+.timer-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32rpx;
+  padding: 0 48rpx;
+  margin-bottom: 32rpx;
+}
+
+.ctrl-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.ctrl-btn.primary {
+  width: 128rpx;
+  height: 128rpx;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: 600;
+  box-shadow: 0 8rpx 24rpx rgba(74, 144, 217, 0.4);
+}
+
+.ctrl-btn.primary.running {
+  background: linear-gradient(135deg, var(--warning), #FFB340);
+  box-shadow: 0 8rpx 24rpx rgba(255, 149, 0, 0.4);
+}
+
+.ctrl-btn.secondary {
+  width: 88rpx;
+  height: 88rpx;
+  background: var(--bg);
+  color: var(--text-secondary);
+  font-size: 24rpx;
+}
+
+.round-info {
+  text-align: center;
+  font-size: 24rpx;
+  color: var(--text-hint);
+  margin-bottom: 32rpx;
+}
+
+.task-select {
+  padding: 0 32rpx;
+}
+
+.task-option {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  margin-bottom: 12rpx;
+  box-shadow: var(--shadow);
+}
+
+.option-icon {
+  font-size: 36rpx;
+  margin-right: 16rpx;
+}
+
+.option-info {
+  flex: 1;
+}
+
+.option-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  display: block;
+}
+
+.option-time {
+  font-size: 22rpx;
+  color: var(--text-hint);
+  display: block;
+  margin-top: 4rpx;
+}
+
+.option-arrow {
+  color: var(--text-hint);
+  font-size: 28rpx;
+}
+
+.free-tip {
+  text-align: center;
+  padding: 48rpx;
+}

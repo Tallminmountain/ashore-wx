@@ -1,0 +1,84 @@
+<navigation-bar title="每日打卡" back="{{true}}" color="black" background="#F5F7FA"></navigation-bar>
+
+<scroll-view class="scrollarea" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="container">
+
+    <!-- 打卡成功页面 -->
+    <view wx:if="{{checkedIn}}" class="checkin-success">
+      <text class="success-icon">🎉</text>
+      <text class="success-title">打卡成功！</text>
+      <text class="success-enc">{{encouragement}}</text>
+      <view class="success-stats">
+        <view class="ss-item">
+          <text class="ss-num">{{completedTasks}}</text>
+          <text class="ss-label">完成任务</text>
+        </view>
+        <view class="ss-item">
+          <text class="ss-num">{{totalMinutes}}</text>
+          <text class="ss-label">学习分钟</text>
+        </view>
+        <view class="ss-item">
+          <text class="ss-num">{{consecutiveDays}}</text>
+          <text class="ss-label">连续打卡</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 打卡页面 -->
+    <view wx:else>
+      <!-- 今日总结 -->
+      <view class="card summary-card">
+        <text class="section-title">📋 今日总结</text>
+        <view class="summary-grid">
+          <view class="sum-item">
+            <text class="sum-icon">📝</text>
+            <text class="sum-value">{{completedTasks}}/{{totalTasks}}</text>
+            <text class="sum-label">完成任务</text>
+          </view>
+          <view class="sum-item">
+            <text class="sum-icon">⏱️</text>
+            <text class="sum-value">{{totalMinutes}}</text>
+            <text class="sum-label">学习分钟</text>
+          </view>
+          <view class="sum-item">
+            <text class="sum-icon">📊</text>
+            <text class="sum-value">{{completionRate}}%</text>
+            <text class="sum-label">完成率</text>
+          </view>
+        </view>
+        <progress-bar percent="{{completionRate}}" height="{{16}}" style="margin-top: 20rpx;"></progress-bar>
+      </view>
+
+      <!-- 是否全部完成 -->
+      <view class="card" wx:if="{{isAllDone}}">
+        <view class="all-done-banner">
+          <text>🎊 太棒了！今天的任务全部完成！</text>
+        </view>
+      </view>
+
+      <!-- 学习感受 -->
+      <view class="card">
+        <text class="section-title">💭 今天学习感受</text>
+        <view class="feeling-list">
+          <view
+            wx:for="{{feelings}}"
+            wx:key="*this"
+            class="feeling-item {{feeling === item ? 'selected' : ''}}"
+            data-value="{{item}}"
+            bindtap="selectFeeling"
+          >{{item}}</view>
+        </view>
+      </view>
+
+      <!-- 打卡按钮 -->
+      <view class="checkin-action">
+        <view class="checkin-btn" bindtap="doCheckin">
+          <text class="cb-text">📝 打卡</text>
+          <text class="cb-hint">记录今天的努力</text>
+        </view>
+      </view>
+    </view>
+
+    <view style="height: 48rpx;"></view>
+  </view>
+</scroll-view>
